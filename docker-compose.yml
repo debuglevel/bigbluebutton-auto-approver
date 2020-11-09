@@ -1,0 +1,62 @@
+version: '3.1'
+
+services:
+
+  mariadb:
+    image: mariadb:10.5.7-focal
+    #restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ChangeThisPasswordBecauseThePortIsOpen
+      MYSQL_USER: bbbautoapprover
+      MYSQL_PASSWORD: AlsoChangeThisPasswordBecauseThePortIsStillOpen
+      MYSQL_DATABASE: bbbautoapprover
+    volumes:
+        - mariadb:/var/lib/mysql
+        - ./mysql-entrypoint-initdb:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin:5.0.4
+    environment:
+    - PMA_HOSTS=mariadb
+    #restart: always
+    ports:
+    - 8080:80
+
+  # FOR DEVELOPMENT ONLY:
+  # greenlight:
+  #   entrypoint: [bin/start]
+  #   image: bigbluebutton/greenlight:v2
+  #   container_name: greenlight-v2
+  #   environment:
+  #     - DB_ADAPTER=postgresql
+  #     - DB_HOST=postgresql
+  #     - DB_PORT=5432
+  #     - DB_NAME=greenlight_production
+  #     - DB_USERNAME=postgres
+  #     - DB_PASSWORD=postgres
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5000:80
+  #   volumes:
+  #     - ./log:/usr/src/app/log
+  #     - ./storage:/usr/src/app/storage
+  #   links:
+  #     - postgresql
+  postgresql:
+    image: postgres:9.5.23-alpine
+    #restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+    #  - ./db/production:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=greenlight_production
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+    postgres:
+    mariadb:
