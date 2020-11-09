@@ -16,13 +16,13 @@ services:
         - mariadb:/var/lib/mysql
         - ./mysql-entrypoint-initdb:/docker-entrypoint-initdb.d
 
-  phpmyadmin:
-    image: phpmyadmin:5.0.4
-    environment:
-    - PMA_HOSTS=mariadb
-    #restart: always
-    ports:
-    - 8080:80
+  # phpmyadmin:
+  #   image: phpmyadmin:5.0.4
+  #   environment:
+  #   - PMA_HOSTS=mariadb
+  #   #restart: always
+  #   ports:
+  #   - 8080:80
 
   # FOR DEVELOPMENT ONLY:
   # greenlight:
@@ -44,18 +44,19 @@ services:
   #     - ./storage:/usr/src/app/storage
   #   links:
   #     - postgresql
-  postgresql:
-    image: postgres:9.5.23-alpine
-    #restart: unless-stopped
-    ports:
-      - 5432:5432
-    volumes:
-    #  - ./db/production:/var/lib/postgresql/data
-      - postgres:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=greenlight_production
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+
+  # postgresql:
+  #   image: postgres:9.5.23-alpine
+  #   #restart: unless-stopped
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #   #  - ./db/production:/var/lib/postgresql/data
+  #     - postgres:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=greenlight_production
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
 
 volumes:
     postgres:
