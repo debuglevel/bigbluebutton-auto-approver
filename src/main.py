@@ -32,9 +32,10 @@ def get_postgres_connection(host: str, user: str, password: str, database: str):
 def get_all_approved_emails(email_database):
     logging.debug('Getting all accepted emails...')
 
-    sql_select_query = "SELECT mail FROM mails"
     cursor = email_database.cursor()
-    cursor.execute(sql_select_query)
+    query = "SELECT mail FROM mails"
+    logging.debug(f"Executing SQL query: {query}")
+    cursor.execute(query)
     records = cursor.fetchall()
     logging.debug(f'Got {cursor.rowcount} rows')
 
@@ -53,7 +54,9 @@ def get_all_pending_users(greenlight_database):
     pending_role_id = get_role_id("pending", greenlight_database)
 
     cursor = greenlight_database.cursor()
-    cursor.execute(f"SELECT id, email FROM users WHERE users.role_id = {pending_role_id}")
+    query = f"SELECT id, email FROM users WHERE users.role_id = {pending_role_id}"
+    logging.debug(f"Executing SQL query: {query}")
+    cursor.execute(query)
     records = cursor.fetchall() 
     logging.debug(f'Got {cursor.rowcount} rows') # TODO: always -1
 
@@ -74,7 +77,9 @@ def get_role_id(role_name: str, greenlight_database):
     logging.debug(f'Getting id of "{role_name}" role...')
 
     cursor = greenlight_database.cursor()
-    cursor.execute(f"SELECT id FROM roles WHERE name = '{role_name}'")
+    query = f"SELECT id FROM roles WHERE name = '{role_name}'"
+    logging.debug(f"Executing SQL query: {query}")
+    cursor.execute(query)
     records_one = cursor.fetchone()
     role_id = records_one[0]
 
@@ -85,7 +90,9 @@ def approve_pending_user(greenlight_database, user_id, pending_role_id, user_rol
     logging.debug(f'Changing "pending" role to "user" of user id {user_id}...')
 
     cursor = greenlight_database.cursor()
-    cursor.execute(f"UPDATE users_roles SET role_id = {user_role_id} WHERE user_id = {user_id} AND role_id = {pending_role_id}")
+    query = f"UPDATE users_roles SET role_id = {user_role_id} WHERE user_id = {user_id} AND role_id = {pending_role_id}"
+    logging.debug(f"Executing SQL query: {query}")
+    cursor.execute(query)
     rows_changed = cursor.rowcount
     logging.debug(f'Changed {rows_changed} rows...')
     greenlight_database.commit()
