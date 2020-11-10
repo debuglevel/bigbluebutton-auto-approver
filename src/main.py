@@ -53,9 +53,7 @@ def get_all_pending_users(greenlight_database):
     pending_role_id = get_role_id("pending", greenlight_database)
 
     cursor = greenlight_database.cursor()
-    postgreSQL_select_Query = f"SELECT id, email FROM users WHERE users.role_id = {pending_role_id}"
-
-    cursor.execute(postgreSQL_select_Query)
+    cursor.execute(f"SELECT id, email FROM users WHERE users.role_id = {pending_role_id}")
     records = cursor.fetchall() 
     logging.debug(f'Got {cursor.rowcount} rows') # TODO: always -1
 
