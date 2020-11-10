@@ -90,7 +90,7 @@ def approve_pending_user(greenlight_database, user_id, pending_role_id, user_rol
     cursor = greenlight_database.cursor()
     cursor.execute(f"UPDATE users_roles SET role_id = {user_role_id} WHERE user_id = {user_id} AND role_id = {pending_role_id}")
     rows_changed = cursor.rowcount
-    logging.debug(f'Changed {rows_deleted} rows...')
+    logging.debug(f'Changed {rows_changed} rows...')
     greenlight_database.commit()
 
     logging.debug(f'Changed "pending" role to "user" of user id {user_id}')
