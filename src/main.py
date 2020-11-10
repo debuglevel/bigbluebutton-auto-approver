@@ -73,11 +73,8 @@ def get_role_id(role_name: str, greenlight_database):
     """
     logging.debug(f'Getting id of "{role_name}" role...')
 
-    PostgreSQL_select_Query = f"select id from roles where name = '{role_name}'"
     cursor = greenlight_database.cursor()
-
-    cursor.execute(PostgreSQL_select_Query)
-
+    cursor.execute(f"SELECT id FROM roles WHERE name = '{role_name}'")
     records_one = cursor.fetchone()
     role_id = records_one[0]
 
