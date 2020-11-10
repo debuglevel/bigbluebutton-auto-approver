@@ -123,7 +123,6 @@ def get_all_accepted_user_ids(pending_users, accepted_emails):
     logging.debug(f'Got {len(accepted_user_ids)} user ids of pending users with accepted mails')
     return accepted_user_ids
 
-@timing
 def loop():
     logging.info('Executing main loop...')
 
@@ -137,16 +136,6 @@ def loop():
 
     email_database.close()
     greenlight_database.close()
-
-def timing(f):
-    def wrap(*args, **kwargs):
-        time1 = time.time()
-        ret = f(*args, **kwargs)
-        time2 = time.time()
-        print('{:s} function took {:.3f}ms'.format(f.__name__, (time2-time1)*1000.0))
-
-        return ret
-    return wrap
 
 def main():
     logging.info('Starting BigBlueButton auto approver...')
