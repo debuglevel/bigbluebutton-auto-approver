@@ -13,3 +13,6 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## TODO
+Fix the whole lot for Greenlight 2.6 because there only one role is allowd and maintained in users table directly. (And that's why you do not want database integration)
