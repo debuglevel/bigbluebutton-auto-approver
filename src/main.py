@@ -140,7 +140,10 @@ def loop():
 def main():
     logging.info('Starting BigBlueButton auto approver...')
     while True:
+        startTime = time.time()
         loop()
+        elapsedTime = time.time() - startTime
+        logging.debug('Main loop finished in {}ms'.format(int(elapsedTime * 1000)))       
         
         sleeptime = int(os.environ['SLEEP_INTERVAL'])
         logging.info(f'Sleeping for {sleeptime}s until next loop...')
