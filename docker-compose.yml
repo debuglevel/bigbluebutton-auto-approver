@@ -16,6 +16,20 @@ services:
         - mariadb:/var/lib/mysql
         - ./mysql-entrypoint-initdb:/docker-entrypoint-initdb.d
 
+  app:
+    build: .
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_USER: bbbautoapprover
+      MYSQL_PASSWORD: AlsoChangeThisPasswordBecauseThePortIsStillOpen
+      MYSQL_DATABASE: bbbautoapprover
+      POSTGRESQL_HOST: IP.OF.THE.HOST
+      POSTGRESQL_USER: postgres
+      POSTGRESQL_PASSWORD: LOOK.INTO.YOUR.GREENLIGHT.ENV
+      POSTGRESQL_DATABASE: greenlight_production
+      SLEEP_INTERVAL: 60
+
+
   # phpmyadmin:
   #   image: phpmyadmin:5.0.4
   #   environment:
