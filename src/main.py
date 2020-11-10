@@ -51,7 +51,7 @@ def get_all_pending(greenlight_database):
     pending_role_id = get_pending_role_id(greenlight_database)
 
     cursor = greenlight_database.cursor()
-    postgreSQL_select_Query = f"SELECT user_id, mail FROM users_roles INNER JOIN users ON (users.id = users_roles.user_id) WHERE role_id = {pending_role_id}"
+    postgreSQL_select_Query = f"SELECT user_id, email FROM users_roles INNER JOIN users ON (users.id = users_roles.user_id) WHERE role_id = {pending_role_id}"
 
     cursor.execute(postgreSQL_select_Query)
     records = cursor.fetchall() 
@@ -69,7 +69,7 @@ def get_all_pending(greenlight_database):
 
 def get_pending_role_id(greenlight_database):
     logging.debug('Getting id of "pending" role...')
-    PostgreSQL_select_Query = "select id from roles where title = 'pending'"
+    PostgreSQL_select_Query = "select id from roles where name = 'pending'"
     cursor = greenlight_database.cursor()
 
     cursor.execute(PostgreSQL_select_Query)
