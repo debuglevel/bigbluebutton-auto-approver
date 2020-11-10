@@ -70,6 +70,9 @@ def get_all_pending(greenlight_database):
     return pending_users
 
 def get_role_id(role_name: str, greenlight_database):
+    """
+    role_name: e.g. "pending", "user"
+    """
     logging.debug(f'Getting id of "{role_name}" role...')
 
     PostgreSQL_select_Query = f"select id from roles where name = '{role_name}'"
