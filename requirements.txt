@@ -1,3 +1,4 @@
 #psycopg2==2.8.6
 py-postgresql==1.2.2
 mysql-connector-python==8.0.22
+tenacity==6.2.0

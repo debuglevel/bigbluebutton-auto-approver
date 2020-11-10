@@ -4,9 +4,11 @@ import mysql.connector
 import postgresql
 import postgresql.driver.dbapi20 as pgdb
 import time
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_random_exponential
 
 logging.basicConfig(level=logging.DEBUG)
 
+@retry(retry=retry_if_exception_type(mysql.connector.errors.InterfaceError), stop=stop_after_attempt(10), wait=wait_random_exponential(multiplier=1, max=10))
 def get_mysql_connection(host: str, user: str, password: str, database: str):
     logging.debug(f'Getting MySQL connection on host={host} database={database} user={user} password={password}...')
     db = mysql.connector.connect(
