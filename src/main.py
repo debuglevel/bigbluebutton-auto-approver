@@ -47,7 +47,7 @@ def get_all_approved_emails(email_database):
     logging.debug(f'Got {count} accepted emails')
     return accepted_emails
 
-def get_all_pending(greenlight_database):
+def get_all_pending_users(greenlight_database):
     logging.debug('Getting all pending users...')
 
     pending_role_id = get_role_id("pending", greenlight_database)
@@ -127,7 +127,7 @@ def loop():
     accepted_emails = get_all_approved_emails(email_database)
 
     greenlight_database = get_postgres_connection(os.environ['POSTGRESQL_HOST'], os.environ['POSTGRESQL_USER'], os.environ['POSTGRESQL_PASSWORD'], os.environ['POSTGRESQL_DATABASE'])
-    pending_users = get_all_pending(greenlight_database)
+    pending_users = get_all_pending_users(greenlight_database)
     accepted_user_ids = get_all_accepted_user_ids(pending_users, accepted_emails)
     remove_pending_roles(accepted_user_ids, greenlight_database)
 
