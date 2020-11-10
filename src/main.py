@@ -50,7 +50,7 @@ def get_all_approved_emails(email_database):
 def get_all_pending(greenlight_database):
     logging.debug('Getting all pending users...')
 
-    pending_role_id = get_pending_role_id(greenlight_database)
+    pending_role_id = get_role_id("pending", greenlight_database)
 
     cursor = greenlight_database.cursor()
     postgreSQL_select_Query = f"SELECT user_id, email FROM users_roles INNER JOIN users ON (users.id = users_roles.user_id) WHERE users_roles.role_id = {pending_role_id}"
@@ -69,18 +69,19 @@ def get_all_pending(greenlight_database):
     logging.debug(f'Got {count} pending users')
     return pending_users
 
-def get_pending_role_id(greenlight_database):
-    logging.debug('Getting id of "pending" role...')
-    PostgreSQL_select_Query = "select id from roles where name = 'pending'"
+def get_role_id(role_name: str, greenlight_database):
+    logging.debug(f'Getting id of "{role_name}" role...')
+
+    PostgreSQL_select_Query = f"select id from roles where name = '{role_name}'"
     cursor = greenlight_database.cursor()
 
     cursor.execute(PostgreSQL_select_Query)
 
     records_one = cursor.fetchone()
-    pending_role_id = records_one[0]
+    role_id = records_one[0]
 
-    logging.debug(f'Getting id of "pending" role: {pending_role_id}')
-    return pending_role_id
+    logging.debug(f'Getting id of "{role_name}" role: {role_id}')
+    return role_id
 
 def remove_pending_role(greenlight_database, user_id, pending_role_id):
     logging.debug(f'Removing pending role of user id {user_id}...')
@@ -96,7 +97,7 @@ def remove_pending_role(greenlight_database, user_id, pending_role_id):
 def remove_pending_roles(user_ids, greenlight_database):
     logging.debug(f'Removing pending roles of {len(user_ids)} users...')
 
-    pending_role_id = get_pending_role_id(greenlight_database)
+    pending_role_id = get_role_id("pending", greenlight_database)
     for user_id in user_ids:
         remove_pending_role(greenlight_database, user_id, pending_role_id)
 
