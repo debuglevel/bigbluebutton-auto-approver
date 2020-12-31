@@ -56,6 +56,8 @@ services:
   #     - DB_NAME=greenlight_production
   #     - DB_USERNAME=postgres
   #     - DB_PASSWORD=postgres
+  #     - SECRET_KEY_BASE=1fb0901987716c00712d64f13c22f9e77f2ec4d8f8c62b47808583aab60617da24dc1aba11edf6afd58e6c8de4c674a63b1888198af55f863ae943b710dbbc37
+  #     - ALLOW_GREENLIGHT_ACCOUNTS=true
   #   restart: unless-stopped
   #   ports:
   #     - 5000:80
