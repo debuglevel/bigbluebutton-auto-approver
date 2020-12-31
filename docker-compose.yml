@@ -15,6 +15,26 @@ services:
     volumes:
         - mariadb:/var/lib/mysql
         - ./mysql-entrypoint-initdb:/docker-entrypoint-initdb.d
+    networks:
+      - bbbautoapprover
+
+  app:
+    build: .
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_USER: bbbautoapprover
+      MYSQL_PASSWORD: AlsoChangeThisPasswordBecauseThePortIsStillOpen
+      MYSQL_DATABASE: bbbautoapprover
+      POSTGRESQL_HOST: postgres
+      POSTGRESQL_USER: postgres
+      POSTGRESQL_PASSWORD: LOOK.INTO.YOUR.GREENLIGHT.ENV
+      POSTGRESQL_DATABASE: greenlight_production
+      SLEEP_INTERVAL: 60
+    external_links:
+      - greenlight_db_1:postgres
+    networks:
+      - greenlight_default
+      - bbbautoapprover
 
   # phpmyadmin:
   #   image: phpmyadmin:5.0.4
@@ -61,3 +81,8 @@ services:
 volumes:
     postgres:
     mariadb:
+
+networks:
+  greenlight_default:
+    external: true
+  bbbautoapprover:
