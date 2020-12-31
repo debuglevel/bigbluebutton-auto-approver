@@ -129,7 +129,7 @@ def loop():
     greenlight_database.close()
 
 def main():
-    logging.info('Starting BigBlueButton auto approver...')
+    logging.info('Starting bigbluebutton-auto-approver...')
     while True:
         loop()
         
