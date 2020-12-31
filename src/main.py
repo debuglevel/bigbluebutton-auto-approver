@@ -69,7 +69,7 @@ def get_all_pending(greenlight_database):
 
 def get_pending_role_id(greenlight_database):
     logging.debug('Getting id of "pending" role...')
-    PostgreSQL_select_Query = "select id from roles where title = 'pending'"
+    PostgreSQL_select_Query = "SELECT id FROM roles WHERE title = 'pending'"
     cursor = greenlight_database.cursor()
 
     cursor.execute(PostgreSQL_select_Query)
