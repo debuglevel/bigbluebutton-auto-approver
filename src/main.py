@@ -8,23 +8,23 @@ import time
 logging.basicConfig(level=logging.DEBUG)
 
 def get_mysql_connection(host: str, user: str, password: str, database: str):
-    logging.debug(f'Getting MySQL connection on host={host} database={database} user={user} password={password}...')
+    logging.debug(f'Getting bigbluebutton-auto-approver MySQL connection on host={host} database={database} user={user} password={password}...')
     db = mysql.connector.connect(
         host=host,
         user=user,
         passwd=password,
         db=database)
-    logging.debug(f'Got MySQL connection: {db}')
+    logging.debug(f'Got bigbluebutton-auto-approver MySQL connection: {db}')
     return db
 
 def get_postgres_connection(host: str, user: str, password: str, database: str):
-    logging.debug(f'Getting PostgreSQL connection on host={host} database={database} user={user} password={password}...')
+    logging.debug(f'Getting Greenlight PostgreSQL connection on host={host} database={database} user={user} password={password}...')
     db = pgdb.connect(
         host=host, 
         user=user, 
         password=password, 
         database=database)
-    logging.debug(f'Got PostgreSQL connection: {db}')
+    logging.debug(f'Got Greenlight PostgreSQL connection: {db}')
     return db
 
 def get_all_approved_emails(email_database):
